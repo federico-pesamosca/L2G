@@ -138,8 +138,8 @@ class FieldLineTracer:
     def getFL(self) -> None:
         """Get fieldlines points. ONLY ON MESH DATA!
         """
-    def getFLOnPoint(self, R: float, Z: float, Theta: float) -> list:
-        """Obtain FL points that goes through the input parameters R, Z, Theta.
+    def getFLOnPoint(self, r: float, z: float, phi: float) -> list:
+        """Obtain FL points that goes through the input parameters R, Z, phi.
         """
     def runFLT(self) -> None: ...
 

@@ -596,8 +596,8 @@ cdef class FieldLineTracer:
         # generated VTK has the same units as the target mesh.
         log.info(f"Finished getting FLs in {perf_counter() - start} seconds.")
 
-    def getFLOnPoint(self, R: float, Z: float, Theta: float) -> list:
-        """Obtain FL points that goes through the input parameters R, Z, Theta.
+    def getFLOnPoint(self, r: float, z: float, phi: float) -> list:
+        """Obtain FL points that goes through the input parameters r, z, phi.
         """
         points = []
 
@@ -606,11 +606,11 @@ cdef class FieldLineTracer:
 
         fl_buffer.clear()
 
-        self.c_FLT.getFL(R, Z, Theta, 1, fl_buffer, self.options.switch_getFL_with_FLT)
+        self.c_FLT.getFL(r, z, phi, 1, fl_buffer, self.options.switch_getFL_with_FLT)
         points.append(<object> fl_buffer)
         fl_buffer.clear()
 
-        self.c_FLT.getFL(R, Z, Theta, -1, fl_buffer, self.options.switch_getFL_with_FLT)
+        self.c_FLT.getFL(r, z, phi, -1, fl_buffer, self.options.switch_getFL_with_FLT)
         points.append(<object> fl_buffer)
         fl_buffer.clear()
         # Now let's order them.

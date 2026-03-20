@@ -2,7 +2,7 @@
 name = "l2g"
 description = "A FLT (Field Line Tracing) suite"
 readme = "README"
-version = "1.0.4"
+version = "1.0.5"
 authors = [
     {name="Gregor Simič", email="gregor.simic@iter.org"}
 ]
@@ -34,6 +34,7 @@ dependencies = [
     "matplotlib>=3.3.0",
     "numpy>=1.19.4",
     "scipy>=1.5.4",
+    "pyyaml"
 ]
 
 [build-system]

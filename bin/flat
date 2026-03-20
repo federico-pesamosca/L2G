@@ -343,9 +343,24 @@ def check_yaml_content(data: Iterator):
         OK &= check_var(d, "plasma_z_displ", ((int, float), [(int, float)]), False)
         OK &= check_var(d, "wall_silh_r_shift", ((int, float), [(int, float)]), False)
         OK &= check_var(d, "wall_silh_r_shift", ((int, float), [(int, float)]), False)
-        OK &= check_var(d, "bt_multiplier", ((int, float), [(int, float)]), False)
-        OK &= check_var(d, "psi_multiplier", ((int, float), [(int, float)]), False)
+        multiplier_OK = True
+        multiplier_OK &= check_var(d, "bt_multiplier", ((int, float), [(int, float)]), False)
+        multiplier_OK &= check_var(d, "psi_multiplier", ((int, float), [(int, float)]), False)
 
+        # Test if the multipliers are 0
+        if multiplier_OK:
+            for var in ["bt_multiplier", "psi_multiplier"]:
+                if var not in d: continue
+                if not isinstance(d[var], list):
+                    val = [d[var]]
+                else:
+                    val = d[var]
+                for el in list(val):
+                    if el == 0.0:
+                        multiplier_OK = False
+                        epprint(f"A value of {var} is 0.0!")
+                        break
+        OK &= multiplier_OK
         if not OK:
             epprint(f"Problem with equilibrium defined at {d['__line__']}")
             sys.exit(1)

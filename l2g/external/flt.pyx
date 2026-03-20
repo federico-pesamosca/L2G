@@ -131,6 +131,25 @@ cdef class PyFLT:
         """
         self.c_flt.runFLT()
 
+    def getFL(self, r: float, z: float, theta: float):
+        """Obtain FL points that goes through the input parameters R, Z, Theta.
+        """
+        points = []
+
+        cdef:
+            vector[double] fl_buffer
+
+        fl_buffer.clear()
+
+        self.c_flt.getFL(r, z, theta, 1, fl_buffer, True)
+        points.append(<object> fl_buffer)
+        fl_buffer.clear()
+
+        self.c_flt.getFL(r, z, theta, -1, fl_buffer, True)
+        points.append(<object> fl_buffer)
+        fl_buffer.clear()
+        return points
+
     def getBCart(self, r: float, z: float, phi: float):
         """Get the B vector at point (r, z, phi) in Cartesian coordinate
         system.
@@ -145,6 +164,7 @@ cdef class PyFLT:
         """
         cdef:
             vector[double] out
+        out.resize(3)
         self.c_flt.getBCart(r, z, phi, out)
         return <object> out
 
@@ -160,6 +180,7 @@ cdef class PyFLT:
         """
         cdef:
             vector[double] out
+        out.resize(2)
         self.c_flt.getBCyln(r, z, out)
         return <object> out
 

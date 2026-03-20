@@ -76,6 +76,23 @@ class PyFLT:
     def runFLT(self) -> None:
         """Calls the runFLT function which starts the FLT.
         """
+
+    def getFL(self, r: float, z: float, phi: float) -> list[float]:
+        """Get fieldline going through point (r, z, phi). Output is a list
+        containing two parts of the fieldline:
+            [[r1, z1, phi1, r2, z2, phi2],
+             [r1, z1, phi1, rn+1, zn+1, phin+1, ...]]
+
+        Arguments:
+            r (float): radial position. In meters
+            z (float): vertical position. In meters
+            phi (float): toroidal angle position. In radians
+
+        Returns:
+            out(list[list[float]]): List that contains two lists. One list
+                contains the fieldline that starts with the up direction and
+                the other contains the part that starts with the down direction
+        """
     def getBCart(self, r: float, z: float, phi: float) -> list[float]:
         """Get the B vector at point (r, z, phi) in Cartesian coordinate
         system.
@@ -83,7 +100,7 @@ class PyFLT:
         Arguments:
             r (float): Radial position
             z (float): Vertical position
-            theta (float): Angle in toroidal direction
+            phi (float): Angle in toroidal direction
 
         Returns:
             out (list[float]): (Bx, By, Bz)
