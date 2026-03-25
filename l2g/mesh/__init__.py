@@ -104,7 +104,8 @@ def triangle_normals(vertices: np.ndarray, triangles: np.ndarray) -> np.ndarray:
     p12 = p2 - p1
     p13 = p3 - p1
     cross = np.cross(p12, p13)
-    return cross / np.linalg.norm(cross, axis=1)
+    # return cross / np.linalg.norm(cross, axis=1) #change this with the following line
+    return cross / np.linalg.norm(cross, axis=1)[:, np.newaxis]
 
 class WrongFileExtensionException(Exception):
     pass

@@ -26,7 +26,8 @@ if file_name.lower().endswith(".med"):
 # Get all fields
 mesh = l2g.mesh.Mesh(med_file)
 fieldNames = set(mesh.getAllFieldNames())
-fields_to_ignore = ["vtkGhostType", "normals"]
+fields_to_ignore = ["vtkGhostType", "normals","Tsurf","barycenter"] # add also Tsurf and barycenter
+
 for f in fields_to_ignore:
     if f in fieldNames:
         fieldNames.remove(f)
@@ -77,13 +78,14 @@ out["coords"] = coords
 out["triangles"] = triangles
 out["barycenter"] = barycenter
 out["barycenter_cyln"] = barycenter_cyln
+# normals saved here instead of the if cycle 
+out["normals"] = mesh.getNormals() 
 
-if "normals" in fieldNames:
-    mesh.setIndex(0)
-    field = mesh.getField("normals")
-    array = field.getArray()
-    out["normals"] = array.toNumPyArray()
+#if "normals" in fieldNames:
+ #   mesh.setIndex(0)
+ #   field = mesh.getField("normals")
+ #   array = field.getArray()
+ #   out["normals"] = array.toNumPyArray()
 
 
 savemat(f"{file_name}_mesh_data.mat", out)
-
